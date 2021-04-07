@@ -12,11 +12,21 @@ import {
   HeaderRight,
 } from "./Header.styled";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { Button } from "@material-ui/core";
 
 function Header() {
   const [user] = useAuthState(auth);
+
+  db.collection("rooms")
+    // .where("message", "==", "hello")
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        console.log(doc.id);
+      });
+    });
+
   return (
     <HeaderContainer>
       <HeaderLeft>
